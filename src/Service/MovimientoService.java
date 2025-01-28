@@ -2,6 +2,8 @@ package Service;
 
 import DAO.MovimientoDAO;
 import DAO.DAOException;
+import Entidades.Movimiento;
+import java.util.List;
 
 public class MovimientoService {
     private MovimientoDAO movimientoDAO;
@@ -10,27 +12,39 @@ public class MovimientoService {
         this.movimientoDAO = new MovimientoDAO(); // Instancia del DAO
     }
 
-    public void emitirTotalMovimientos(int movimientoId) throws ServiceException {
+    // Método para emitir el total de movimientos de un usuario
+    public double emitirTotalMovimientos(int usuarioId) throws ServiceException {
         try {
-            movimientoDAO.emitirTotalMovimientos(movimientoId);
+            return movimientoDAO.obtenerTotalMovimientos(usuarioId);
         } catch (DAOException e) {
             throw new ServiceException("Error al emitir el total de movimientos", e);
         }
     }
 
-    public void emitirMovimientosTarjeta(int tarjetaId) throws ServiceException {
+    // Método para emitir los movimientos de una tarjeta
+    public List<Movimiento> emitirMovimientosTarjeta(int tarjetaId) throws ServiceException {
         try {
-            movimientoDAO.emitirMovimientosTarjeta(tarjetaId);
+            return movimientoDAO.obtenerMovimientosPorTarjeta(tarjetaId);
         } catch (DAOException e) {
-            throw new ServiceException("Error al emitir movimientos de la tarjeta", e);
+            throw new ServiceException("Error al emitir los movimientos de la tarjeta", e);
         }
     }
 
-    public void emitirMovimientosUsuario(int usuarioId) throws ServiceException {
+    // Método para emitir los movimientos de un usuario
+    public List<Movimiento> emitirMovimientosUsuario(int usuarioId) throws ServiceException {
         try {
-            movimientoDAO.emitirMovimientosUsuario(usuarioId);
+            return movimientoDAO.obtenerMovimientosPorUsuario(usuarioId);
         } catch (DAOException e) {
-            throw new ServiceException("Error al emitir movimientos del usuario", e);
+            throw new ServiceException("Error al emitir los movimientos del usuario", e);
+        }
+    }
+
+    // Método para crear un movimiento
+    public void crearMovimiento(Movimiento movimiento) throws ServiceException {
+        try {
+            movimientoDAO.crearMovimiento(movimiento);
+        } catch (DAOException e) {
+            throw new ServiceException("Error al crear el movimiento", e);
         }
     }
 }

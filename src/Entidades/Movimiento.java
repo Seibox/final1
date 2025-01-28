@@ -11,14 +11,18 @@ public class Movimiento {
     private double monto;
     private Date fecha;
 
+    private int usuarioId; // Nuevo campo
+    private int tarjetaId; // Nuevo campo
+
     private MovimientoService movimientoService;
 
-    public Movimiento(int id, String tipoMovimiento, double monto, Date fecha) {
+    public Movimiento(int id, String tipoMovimiento, double monto, Date fecha, int usuarioId, int tarjetaId) {
         this.id = id;
         this.tipoMovimiento = tipoMovimiento;
         this.monto = monto;
         this.fecha = fecha;
-        this.movimientoService = new MovimientoService(); // Instancia del servicio
+        this.usuarioId = usuarioId;
+        this.tarjetaId = tarjetaId;
     }
 
     // Método para emitir el total de movimientos
@@ -46,5 +50,61 @@ public class Movimiento {
         } catch (ServiceException e) {
             System.err.println("Error al emitir los movimientos del usuario: " + e.getMessage());
         }
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTipoMovimiento() {
+        return tipoMovimiento;
+    }
+
+    public void setTipoMovimiento(String tipoMovimiento) {
+        this.tipoMovimiento = tipoMovimiento;
+    }
+
+    public double getMonto() {
+        return monto;
+    }
+
+    public void setMonto(double monto) {
+        this.monto = monto;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public int getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(int usuarioId) {
+        this.usuarioId = usuarioId;
+    }
+
+    public int getTarjetaId() {
+        return tarjetaId;
+    }
+
+    public void setTarjetaId(int tarjetaId) {
+        this.tarjetaId = tarjetaId;
+    }
+
+    public MovimientoService getMovimientoService() {
+        return movimientoService;
+    }
+
+    public void setMovimientoService(MovimientoService movimientoService) {
+        this.movimientoService = movimientoService;
     }
 }

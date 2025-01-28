@@ -17,22 +17,44 @@ public abstract class Usuario {
     }
 
     // Métodos abstractos (serán implementados en las subclases)
-    public abstract void transferir();
-    public abstract void usarTarjeta();
-    public abstract void pagarTarjeta();
 
-    // Métodos adicionales (solo para administradores, implementados en UsuarioAdministrador)
-    public void crearUsuario() {
-        throw new UnsupportedOperationException("Operación no soportada para este tipo de usuario.");
+    public String getClave() {
+        return clave;
     }
 
-    public void crearTarjeta() {
-        throw new UnsupportedOperationException("Operación no soportada para este tipo de usuario.");
+    public void setClave(String clave) {
+        this.clave = clave;
     }
 
-    public void crearCuenta() {
-        throw new UnsupportedOperationException("Operación no soportada para este tipo de usuario.");
+    public String getApellido() {
+        return apellido;
     }
 
-    // Getters y Setters (se agregarán más adelante si los necesitas)
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(String tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
 }

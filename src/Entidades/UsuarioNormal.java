@@ -11,30 +11,32 @@ public class UsuarioNormal extends Usuario {
         this.usuarioNormalService = new UsuarioNormalService(); // Instancia del servicio
     }
 
-    @Override
-    public void transferir() {
+
+    public void transferir(int cuentaOrigenId, int cuentaDestinoId, double monto) {
         try {
-            usuarioNormalService.transferir(this);
+            usuarioNormalService.transferir(this.getId(), cuentaOrigenId, cuentaDestinoId, monto);
         } catch (ServiceException e) {
             System.err.println("Error al realizar la transferencia: " + e.getMessage());
         }
     }
 
-    @Override
-    public void usarTarjeta() {
+
+    public void usarTarjeta(int tarjetaId, double monto) {
         try {
-            usuarioNormalService.usarTarjeta(this);
+            usuarioNormalService.usarTarjeta(tarjetaId, monto);
         } catch (ServiceException e) {
             System.err.println("Error al usar la tarjeta: " + e.getMessage());
         }
     }
 
-    @Override
-    public void pagarTarjeta() {
+
+    public void pagarTarjeta(int tarjetaId, double monto) {
         try {
-            usuarioNormalService.pagarTarjeta(this);
+            usuarioNormalService.pagarTarjeta(tarjetaId, monto);
         } catch (ServiceException e) {
             System.err.println("Error al pagar la tarjeta: " + e.getMessage());
         }
     }
+
+
 }

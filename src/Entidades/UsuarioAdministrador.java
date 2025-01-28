@@ -11,41 +11,41 @@ public class UsuarioAdministrador extends Usuario {
         this.usuarioAdministradorService = new UsuarioAdministradorService(); // Instancia del servicio
     }
 
-    @Override
+
     public void transferir() {
         throw new UnsupportedOperationException("Los administradores no realizan transferencias.");
     }
 
-    @Override
+
     public void usarTarjeta() {
         throw new UnsupportedOperationException("Los administradores no usan tarjetas.");
     }
 
-    @Override
+
     public void pagarTarjeta() {
         throw new UnsupportedOperationException("Los administradores no pagan tarjetas.");
     }
 
     // Métodos específicos del administrador
-    public void crearUsuario() {
+    public void crearUsuario(String nombre, String apellido, String clave) {
         try {
-            usuarioAdministradorService.crearUsuario();
+            usuarioAdministradorService.crearUsuario(nombre, apellido, clave);
         } catch (ServiceException e) {
             System.err.println("Error al crear usuario: " + e.getMessage());
         }
     }
 
-    public void crearTarjeta() {
+    public void crearTarjeta(int usuarioId, double saldoInicial, String descripcion) {
         try {
-            usuarioAdministradorService.crearTarjeta();
+            usuarioAdministradorService.crearTarjeta(usuarioId, saldoInicial, descripcion);
         } catch (ServiceException e) {
             System.err.println("Error al crear tarjeta: " + e.getMessage());
         }
     }
 
-    public void crearCuenta() {
+    public void crearCuenta(int usuarioId, String tipoCuenta, String moneda, double saldoInicial) {
         try {
-            usuarioAdministradorService.crearCuenta();
+            usuarioAdministradorService.crearCuenta(usuarioId, tipoCuenta, moneda, saldoInicial);
         } catch (ServiceException e) {
             System.err.println("Error al crear cuenta: " + e.getMessage());
         }

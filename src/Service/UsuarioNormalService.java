@@ -1,17 +1,18 @@
 package Service;
 
 import DAO.DAOException;
+import DAO.UsuarioNormalDAO;
 
 public class UsuarioNormalService {
-    private UsuarioDAO usuarioDAO;
+    private UsuarioNormalDAO usuarioNormalDAO;
 
     public UsuarioNormalService() {
-        this.usuarioDAO = new UsuarioDAO(); // Instancia del DAO
+        this.usuarioNormalDAO = new UsuarioNormalDAO(); // Instancia del DAO
     }
 
     public void transferir(int usuarioId, int cuentaOrigenId, int cuentaDestinoId, double monto) throws ServiceException {
         try {
-            usuarioDAO.transferir(usuarioId, cuentaOrigenId, cuentaDestinoId, monto);
+            usuarioNormalDAO.transferir(usuarioId, cuentaOrigenId, cuentaDestinoId, monto);
         } catch (DAOException e) {
             throw new ServiceException("Error al realizar la transferencia", e);
         }
@@ -19,7 +20,7 @@ public class UsuarioNormalService {
 
     public void usarTarjeta(int tarjetaId, double monto) throws ServiceException {
         try {
-            usuarioDAO.usarTarjeta(tarjetaId, monto);
+            usuarioNormalDAO.usarTarjeta(tarjetaId, monto);
         } catch (DAOException e) {
             throw new ServiceException("Error al usar la tarjeta", e);
         }
@@ -27,7 +28,7 @@ public class UsuarioNormalService {
 
     public void pagarTarjeta(int tarjetaId, double monto) throws ServiceException {
         try {
-            usuarioDAO.pagarTarjeta(tarjetaId, monto);
+            usuarioNormalDAO.pagarTarjeta(tarjetaId, monto);
         } catch (DAOException e) {
             throw new ServiceException("Error al pagar la tarjeta", e);
         }
