@@ -1,6 +1,8 @@
 package DAO;
 
-import DAO.DAOException;
+import Entidades.Tarjeta;
+
+import java.util.List;
 
 public interface ITarjetaDAO {
 
@@ -9,4 +11,6 @@ public interface ITarjetaDAO {
 
     // Debita un monto del saldo de una tarjeta
     void debitarSaldo(int tarjetaId, double monto) throws DAOException;
+
+    List<Tarjeta> obtenerTarjetasPorUsuario(int usuarioId) throws DAOException;
 }

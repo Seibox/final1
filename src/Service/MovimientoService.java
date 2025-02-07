@@ -39,6 +39,15 @@ public class MovimientoService {
         }
     }
 
+    // Método para emitir todos los movimientos
+    public List<Movimiento> emitirTodosLosMovimientos() throws ServiceException {
+        try {
+            return movimientoDAO.obtenerTodosLosMovimientos();
+        } catch (DAOException e) {
+            throw new ServiceException("Error al emitir todos los movimientos", e);
+        }
+    }
+
     // Método para crear un movimiento
     public void crearMovimiento(Movimiento movimiento) throws ServiceException {
         try {

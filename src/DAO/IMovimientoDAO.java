@@ -9,4 +9,6 @@ public interface IMovimientoDAO {
     List<Movimiento> obtenerMovimientosPorTarjeta(int tarjetaId) throws DAOException;
     double obtenerTotalMovimientos(int usuarioId) throws DAOException;
     void crearMovimiento(Movimiento movimiento) throws DAOException;
+
+    List<Movimiento> obtenerTodosLosMovimientos() throws DAOException;
 }

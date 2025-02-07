@@ -3,6 +3,9 @@ package Service;
 import DAO.DAOException;
 import DAO.ITarjetaDAO;
 import DAO.TarjetaDAO;
+import Entidades.Tarjeta;
+
+import java.util.List;
 
 public class TarjetaService {
 
@@ -51,5 +54,18 @@ public class TarjetaService {
         } catch (DAOException e) {
             throw new ServiceException("Error al debitar saldo de la tarjeta con ID: " + tarjetaId, e);
         }
+
     }
+
+    public List<Tarjeta> obtenerTarjetasPorUsuario(int usuarioId) throws ServiceException {
+        try {
+            return tarjetaDAO.obtenerTarjetasPorUsuario(usuarioId);
+        } catch (DAOException e) {
+            throw new ServiceException("Error al obtener las tarjetas del usuario con ID: " + usuarioId, e);
+        }
+    }
+
+
+
+
 }

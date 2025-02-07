@@ -11,51 +11,81 @@ import java.util.List;
 
 public class UsuarioAdministradorDAO implements IUsuarioAdministradorDAO {
 
-    private static final String URL = "jdbc:h2:~/final"; // URL de la base de datos H2
+    private static final String URL = "jdbc:h2:~/final1"; // URL de la base de datos H2
     private static final String USER = "sa"; // Usuario de la base de datos
     private static final String PASSWORD = ""; // Contraseña de la base de datos
 
     @Override
     public void crearUsuario(UsuarioAdministrador usuario) throws DAOException {
-        String sql = "INSERT INTO usuarios (id, nombre, apellido, clave, tipo_usuario) VALUES (?, ?, ?, ?, ?)";
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+        String sqlCheck = "SELECT COUNT(*) FROM usuario WHERE id = ?";
+        String sqlInsert = "INSERT INTO usuario (id, nombre, apellido, clave, tipo_usuario) VALUES (?, ?, ?, ?, ?)";
 
-            statement.setInt(1, usuario.getId());
-            statement.setString(2, usuario.getNombre());
-            statement.setString(3, usuario.getApellido());
-            statement.setString(4, usuario.getClave());
-            statement.setString(5, "administrador");
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
 
-            statement.executeUpdate();
+            // Verificación de ID duplicado
+            try (PreparedStatement statementCheck = connection.prepareStatement(sqlCheck)) {
+                statementCheck.setInt(1, usuario.getId());
+                ResultSet rs = statementCheck.executeQuery();
+                if (rs.next() && rs.getInt(1) > 0) {
+                    // Si el ID ya existe, lanzamos una excepción
+                    throw new DAOException("El ID ya está en uso.");
+                }
+            }
+
+            // Si el ID no existe, realizamos la inserción
+            try (PreparedStatement statementInsert = connection.prepareStatement(sqlInsert)) {
+                statementInsert.setInt(1, usuario.getId());
+                statementInsert.setString(2, usuario.getNombre());
+                statementInsert.setString(3, usuario.getApellido());
+                statementInsert.setString(4, usuario.getClave());
+                statementInsert.setString(5, "normal"); // El tipo de usuario siempre será "normal"
+
+                statementInsert.executeUpdate();
+            }
+
         } catch (SQLException e) {
-            throw new DAOException("Error al crear el usuario administrador.", e);
+            // Detalles del error de SQL
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("Error code: " + e.getErrorCode());
+            throw new DAOException("Error al crear el usuario: " + e.getMessage(), e);
         }
     }
 
-    @Override
-    public void crearTarjeta(int idUsuario, String descripcion) throws DAOException {
-        String sql = "INSERT INTO tarjetas (id_usuario, descripcion, saldo) VALUES (?, ?, 0)";
+
+
+
+    public void crearTarjeta(int numeroTarjeta, String descripcion, int usuarioId) throws DAOException {
+        String sql = "INSERT INTO tarjeta (id, saldo, descripcion, usuario_id) VALUES (?, 0, ?, ?)";
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setInt(1, idUsuario);
+            statement.setInt(1, numeroTarjeta);
             statement.setString(2, descripcion);
+            statement.setInt(3, usuarioId);
 
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Error al crear tarjeta para el usuario.", e);
+            // Imprimir detalles del error en consola
+            System.err.println("Error al crear la tarjeta: " + e.getMessage());
+            e.printStackTrace();
+            throw new DAOException("Error al crear la tarjeta para el usuario.", e);
         }
     }
 
+
+
     @Override
-    public void crearCuenta(int idUsuario, String tipoCuenta) throws DAOException {
-        String sql = "INSERT INTO cuentas (id_usuario, tipo_cuenta, saldo) VALUES (?, ?, 0)";
+    public void crearCuenta(String cbu, String alias, String tipoCuenta, String moneda, double saldo, int usuarioId) throws DAOException {
+        String sql = "INSERT INTO cuenta (cbu, alias, tipo_cuenta, moneda, saldo, usuario_id) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setInt(1, idUsuario);
-            statement.setString(2, tipoCuenta);
+            statement.setString(1, cbu);
+            statement.setString(2, alias);
+            statement.setString(3, tipoCuenta);
+            statement.setString(4, moneda);
+            statement.setDouble(5, saldo);
+            statement.setInt(6, usuarioId);
 
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -63,9 +93,10 @@ public class UsuarioAdministradorDAO implements IUsuarioAdministradorDAO {
         }
     }
 
+
     @Override
     public List<UsuarioAdministrador> listarAdministradores() throws DAOException {
-        String sql = "SELECT * FROM usuarios WHERE tipo_usuario = 'administrador'";
+        String sql = "SELECT * FROM usuario WHERE tipo_usuario = 'administrador'";
         List<UsuarioAdministrador> administradores = new ArrayList<>();
 
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);

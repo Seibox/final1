@@ -47,4 +47,52 @@ public class Cuenta {
             System.err.println("Error al obtener la información de la cuenta: " + e.getMessage());
         }
     }
+
+    public String getCbu() {
+        return cbu;
+    }
+
+    public void setCbu(String cbu) {
+        this.cbu = cbu;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
+
+    public String getTipoCuenta() {
+        return tipoCuenta;
+    }
+
+    public void setTipoCuenta(String tipoCuenta) {
+        this.tipoCuenta = tipoCuenta;
+    }
+
+    public String getMoneda() {
+        return moneda;
+    }
+
+    public void setMoneda(String moneda) {
+        this.moneda = moneda;
+    }
+
+    public double getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
+    }
+
+    public CuentaService getCuentaService() {
+        return cuentaService;
+    }
+
+    public void setCuentaService(CuentaService cuentaService) {
+        this.cuentaService = cuentaService;
+    }
 }

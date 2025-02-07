@@ -7,7 +7,7 @@ import java.util.List;
 
 public class MovimientoDAO implements IMovimientoDAO {
 
-    private static final String URL = "jdbc:h2:~/final"; // URL de la base de datos H2
+    private static final String URL = "jdbc:h2:~/final1"; // URL de la base de datos H2
     private static final String USER = "sa"; // Usuario de la base de datos
     private static final String PASSWORD = ""; // Contraseña de la base de datos
 
@@ -55,6 +55,29 @@ public class MovimientoDAO implements IMovimientoDAO {
             }
         } catch (SQLException e) {
             throw new DAOException("Error al obtener los movimientos de la tarjeta con ID: " + tarjetaId, e);
+        }
+        return movimientos;
+    }
+
+    @Override
+    public List<Movimiento> obtenerTodosLosMovimientos() throws DAOException {
+        String sql = "SELECT id, tipo_movimiento, monto, fecha, usuario_id, tarjeta_id FROM Movimiento";
+        List<Movimiento> movimientos = new ArrayList<>();
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                movimientos.add(new Movimiento(
+                        rs.getInt("id"),
+                        rs.getString("tipo_movimiento"),
+                        rs.getDouble("monto"),
+                        new Date(rs.getTimestamp("fecha").getTime()),
+                        rs.getInt("usuario_id"),
+                        rs.getInt("tarjeta_id")
+                ));
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Error al obtener todos los movimientos", e);
         }
         return movimientos;
     }

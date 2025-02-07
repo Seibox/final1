@@ -11,7 +11,7 @@ import java.util.List;
 
 public class UsuarioNormalDAO implements IUsuarioNormalDAO {
 
-    private static final String URL = "jdbc:h2:~/final"; // URL de la base de datos H2
+    private static final String URL = "jdbc:h2:~/final1"; // URL de la base de datos H2
     private static final String USER = "sa"; // Usuario de la base de datos
     private static final String PASSWORD = ""; // Contraseña de la base de datos
 

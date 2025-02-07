@@ -27,27 +27,30 @@ public class UsuarioAdministrador extends Usuario {
     }
 
     // Métodos específicos del administrador
-    public void crearUsuario(String nombre, String apellido, String clave) {
+    public void crearUsuario(int id, String nombre, String apellido, String clave) {
         try {
-            usuarioAdministradorService.crearUsuario(nombre, apellido, clave);
+            usuarioAdministradorService.crearUsuario (id, nombre, apellido, clave);
         } catch (ServiceException e) {
             System.err.println("Error al crear usuario: " + e.getMessage());
         }
     }
 
-    public void crearTarjeta(int usuarioId, double saldoInicial, String descripcion) {
+    public void crearTarjeta(int numeroTarjeta, String descripcion, int usuarioId) {
         try {
-            usuarioAdministradorService.crearTarjeta(usuarioId, saldoInicial, descripcion);
+            usuarioAdministradorService.crearTarjeta(numeroTarjeta, descripcion, usuarioId);
         } catch (ServiceException e) {
             System.err.println("Error al crear tarjeta: " + e.getMessage());
         }
     }
 
-    public void crearCuenta(int usuarioId, String tipoCuenta, String moneda, double saldoInicial) {
+
+    public void crearCuenta(String cbu, String alias, String tipoCuenta, String moneda, double saldo, int usuarioId) {
         try {
-            usuarioAdministradorService.crearCuenta(usuarioId, tipoCuenta, moneda, saldoInicial);
+            // Llamamos al servicio para crear la cuenta con todos los parámetros necesarios
+            usuarioAdministradorService.crearCuenta(cbu, alias, tipoCuenta, moneda, saldo, usuarioId);
         } catch (ServiceException e) {
             System.err.println("Error al crear cuenta: " + e.getMessage());
         }
     }
+
 }

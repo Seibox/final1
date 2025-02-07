@@ -4,6 +4,8 @@ import DAO.CuentaDAO;
 import DAO.DAOException;
 import Entidades.Cuenta;
 
+import java.util.List;
+
 public class CuentaService {
     private CuentaDAO cuentaDAO;
 
@@ -37,4 +39,21 @@ public class CuentaService {
             throw new ServiceException("Error al obtener la información de la cuenta con CBU: " + cbu, e);
         }
     }
+
+    public List<Cuenta> obtenerCuentasPorUsuario(int usuarioId) throws ServiceException {
+        try {
+            return cuentaDAO.obtenerCuentasPorUsuario(usuarioId);
+        } catch (DAOException e) {
+            throw new ServiceException("Error al obtener las cuentas del usuario con ID: " + usuarioId, e);
+        }
+    }
+
+    public Cuenta mostrarInfoPorAlias(String alias) throws ServiceException {
+        try {
+            return cuentaDAO.mostrarInfoPorAlias(alias);
+        } catch (DAOException e) {
+            throw new ServiceException("Error al obtener la información de la cuenta con alias: " + alias, e);
+        }
+    }
+
 }
