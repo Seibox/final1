@@ -99,8 +99,7 @@ public class PanelTarjeta extends JPanel {
                         "Uso de tarjeta",
                         monto,
                         new Date(),
-                        usuario.getId(),
-                        tarjetaId
+                        usuario.getId()
                 );
                 movimientoService.crearMovimiento(movimiento);
 

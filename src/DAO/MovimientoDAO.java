@@ -13,7 +13,7 @@ public class MovimientoDAO implements IMovimientoDAO {
 
     @Override
     public List<Movimiento> obtenerMovimientosPorUsuario(int usuarioId) throws DAOException {
-        String sql = "SELECT id, tipo_movimiento, monto, fecha, usuario_id, tarjeta_id FROM Movimiento WHERE usuario_id = ?";
+        String sql = "SELECT id, tipo_movimiento, monto, fecha, usuario_id FROM Movimiento WHERE usuario_id = ?";
         List<Movimiento> movimientos = new ArrayList<>();
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -25,8 +25,8 @@ public class MovimientoDAO implements IMovimientoDAO {
                         rs.getString("tipo_movimiento"),
                         rs.getDouble("monto"),
                         new Date(rs.getTimestamp("fecha").getTime()),
-                        rs.getInt("usuario_id"),
-                        rs.getInt("tarjeta_id")
+                        rs.getInt("usuario_id")
+
                 ));
             }
         } catch (SQLException e) {
@@ -37,7 +37,7 @@ public class MovimientoDAO implements IMovimientoDAO {
 
     @Override
     public List<Movimiento> obtenerMovimientosPorTarjeta(int tarjetaId) throws DAOException {
-        String sql = "SELECT id, tipo_movimiento, monto, fecha, usuario_id, tarjeta_id FROM Movimiento WHERE tarjeta_id = ?";
+        String sql = "SELECT id, tipo_movimiento, monto, fecha, usuario_id FROM Movimiento WHERE tarjeta_id = ?";
         List<Movimiento> movimientos = new ArrayList<>();
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -49,8 +49,7 @@ public class MovimientoDAO implements IMovimientoDAO {
                         rs.getString("tipo_movimiento"),
                         rs.getDouble("monto"),
                         new Date(rs.getTimestamp("fecha").getTime()),
-                        rs.getInt("usuario_id"),
-                        rs.getInt("tarjeta_id")
+                        rs.getInt("usuario_id")
                 ));
             }
         } catch (SQLException e) {
@@ -61,7 +60,7 @@ public class MovimientoDAO implements IMovimientoDAO {
 
     @Override
     public List<Movimiento> obtenerTodosLosMovimientos() throws DAOException {
-        String sql = "SELECT id, tipo_movimiento, monto, fecha, usuario_id, tarjeta_id FROM Movimiento";
+        String sql = "SELECT id, tipo_movimiento, monto, fecha, usuario_id FROM Movimiento";
         List<Movimiento> movimientos = new ArrayList<>();
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -72,8 +71,7 @@ public class MovimientoDAO implements IMovimientoDAO {
                         rs.getString("tipo_movimiento"),
                         rs.getDouble("monto"),
                         new Date(rs.getTimestamp("fecha").getTime()),
-                        rs.getInt("usuario_id"),
-                        rs.getInt("tarjeta_id")
+                        rs.getInt("usuario_id")
                 ));
             }
         } catch (SQLException e) {
@@ -100,14 +98,13 @@ public class MovimientoDAO implements IMovimientoDAO {
 
     @Override
     public void crearMovimiento(Movimiento movimiento) throws DAOException {
-        String sql = "INSERT INTO Movimiento (tipo_movimiento, monto, fecha, usuario_id, tarjeta_id) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Movimiento (tipo_movimiento, monto, fecha, usuario_id) VALUES (?, ?, ?, ?)";
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, movimiento.getTipoMovimiento());
             stmt.setDouble(2, movimiento.getMonto());
             stmt.setTimestamp(3, new Timestamp(movimiento.getFecha().getTime()));
             stmt.setInt(4, movimiento.getUsuarioId());
-            stmt.setInt(5, movimiento.getTarjetaId());
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Error al crear el movimiento", e);

@@ -12,17 +12,17 @@ public class Movimiento {
     private Date fecha;
 
     private int usuarioId; // Nuevo campo
-    private int tarjetaId; // Nuevo campo
+
 
     private MovimientoService movimientoService;
 
-    public Movimiento(int id, String tipoMovimiento, double monto, Date fecha, int usuarioId, int tarjetaId) {
+    public Movimiento(int id, String tipoMovimiento, double monto, Date fecha, int usuarioId) {
         this.id = id;
         this.tipoMovimiento = tipoMovimiento;
         this.monto = monto;
         this.fecha = fecha;
         this.usuarioId = usuarioId;
-        this.tarjetaId = tarjetaId;
+
     }
 
     // Método para emitir el total de movimientos
@@ -34,14 +34,7 @@ public class Movimiento {
         }
     }
 
-    // Método para emitir los movimientos de una tarjeta
-    public void emitirMovimientosTarjeta(int tarjetaId) {
-        try {
-            movimientoService.emitirMovimientosTarjeta(tarjetaId);
-        } catch (ServiceException e) {
-            System.err.println("Error al emitir los movimientos de la tarjeta: " + e.getMessage());
-        }
-    }
+
 
     // Método para emitir los movimientos de un usuario
     public void emitirMovimientosUsuario(int usuarioId) {
@@ -92,13 +85,6 @@ public class Movimiento {
         this.usuarioId = usuarioId;
     }
 
-    public int getTarjetaId() {
-        return tarjetaId;
-    }
-
-    public void setTarjetaId(int tarjetaId) {
-        this.tarjetaId = tarjetaId;
-    }
 
     public MovimientoService getMovimientoService() {
         return movimientoService;

@@ -52,6 +52,7 @@ public class PanelTransferencia extends JPanel {
             }
         } catch (ServiceException e) {
             JOptionPane.showMessageDialog(this, "Error al obtener las cuentas: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace(); // Imprimir el error por consola
         }
 
         panelCuentaOrigen.add(lblCuentaOrigen);
@@ -128,23 +129,24 @@ public class PanelTransferencia extends JPanel {
                 // Registrar el movimiento de transferencia
                 Movimiento movimiento = new Movimiento(
                         0, // El ID se generará automáticamente en la base de datos
-                        "Transferencia con CBU",
+                        "enviar transferencia",
                         monto,
                         new Date(),
-                        usuario.getId(),
-                        0 // No hay tarjeta involucrada en una transferencia
+                        usuario.getId()
+                        // No hay tarjeta involucrada en una transferencia
                 );
                 movimientoService.crearMovimiento(movimiento);
 
                 JOptionPane.showMessageDialog(this, "Transferencia realizada correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "El monto ingresado no es válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace(); // Imprimir el error por consola
             } catch (ServiceException ex) {
                 JOptionPane.showMessageDialog(this, "Error al realizar la transferencia: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace(); // Imprimir el error por consola
             }
         });
 
-        // Acción para el botón "Transferir con Alias"
         btnTransferirAlias.addActionListener(e -> {
             try {
                 // Obtener la cuenta de origen
@@ -193,19 +195,20 @@ public class PanelTransferencia extends JPanel {
                 // Registrar el movimiento de transferencia
                 Movimiento movimiento = new Movimiento(
                         0, // El ID se generará automáticamente en la base de datos
-                        "Transferencia con Alias",
+                        "enviar transferencia", // Cambiado a "enviar transferencia" para coincidir con el ENUM
                         monto,
                         new Date(),
-                        usuario.getId(),
-                        0 // No hay tarjeta involucrada en una transferencia
+                        usuario.getId()
                 );
                 movimientoService.crearMovimiento(movimiento);
 
                 JOptionPane.showMessageDialog(this, "Transferencia realizada correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "El monto ingresado no es válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace(); // Imprimir el error por consola
             } catch (ServiceException ex) {
                 JOptionPane.showMessageDialog(this, "Error al realizar la transferencia: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace(); // Imprimir el error por consola
             }
         });
 
